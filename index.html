@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Flowers — Доставка цветов</title>
+    <link href="https://fonts.googleapis.com/css2?family=Product+Sans:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #202124;
+            background-color: #ffffff;
+            line-height: 1.5;
+        }
+
+        /* Шапка сайта в стиле Google */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid #e0e0e0;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-family: 'Product Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* Фирменные цвета Google для логотипа */
+        .logo span:nth-child(1) { color: #4285F4; }
+        .logo span:nth-child(2) { color: #EA4335; }
+        .logo span:nth-child(3) { color: #FBBC05; }
+        .logo span:nth-child(4) { color: #4285F4; }
+        .logo span:nth-child(5) { color: #34A853; }
+        .logo span:nth-child(6) { color: #EA4335; }
+
+        .contact-link {
+            font-weight: 500;
+            color: #1a73e8;
+            text-decoration: none;
+            border: 1px solid #dadce0;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .contact-link:hover {
+            background-color: #f8f9fa;
+            border-color: #cccccd;
+        }
+
+        /* Главный баннер */
+        .hero {
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Product Sans', sans-serif;
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #202124;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #5f6368;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Витрина товаров */
+        .products-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .product-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .product-desc {
+            font-size: 14px;
+            color: #5f6368;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #202124;
+        }
+
+        .buy-btn {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .buy-btn:hover {
+            background-color: #1557b0;
+        }
+
+        /* Подвал */
+        footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer-text {
+            color: #5f6368;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .footer-phone {
+            font-size: 18px;
+            font-weight: 500;
+            color: #1a73e8;
+            text-decoration: none;
+        }
+
+        .footer-phone:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Шапка -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span> Цветы
+            </a>
+            <a href="https://wa.me/79280126881" target="_blank" class="contact-link">Написать в WhatsApp</a>
+        </div>
+    </header>
+
+    <!-- Главный баннер -->
+    <section class="hero">
+        <h1>Свежие цветы с доставкой</h1>
+        <p>Выбирайте лучшие букеты для ваших близких. Быстро, качественно и всегда вовремя.</p>
+    </section>
+
+    <!-- Каталог товаров -->
+    <main class="products-section">
+        <div class="products-grid">
+            
+            <!-- Товар 1 -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" alt="Красные розы" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Букет «Премиум Розы»</h3>
+                    <p class="product-desc">Классический букет из отборных бархатных красных роз. Идеальный способ выразить самые искренние и глубокие чувства.</p>
+                    <div class="product-footer">
+                        <span class="product-price">3 500 ₽</span>
+                        <a href="https://wa.me/79280126881?text=Здравствуйте!%20Хочу%20заказать%20букет%20Премиум%20Розы" target="_blank" class="buy-btn">Заказать</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Товар 2 -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1560717789-0ac7c58ac90a?auto=format&fit=crop&w=600&q=80" alt="Белые лилии" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Нежные Белые Лилии</h3>
+                    <p class="product-desc">Элегантная композиция из свежих белых лилий. Обладает тонким изысканным ароматом и дарит ощущение легкости.</p>
+                    <div class="product-footer">
+                        <span class="product-price">2 900 ₽</span>
+                        <a href="https://wa.me/79280126881?text=Здравствуйте!%20Хочу%20заказать%20букет%20Белых%20Лилий" target="_blank" class="buy-btn">Заказать</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Товар 3 -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=600&q=80" alt="Весенний микс" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Микс «Весеннее Настроение»</h3>
+                    <p class="product-desc">Яркое сочетание сезонных цветов, оформленное в крафтовую бумагу. Подойдет для любого праздника или просто для улыбки.</p>
+                    <div class="product-footer">
+                        <span class="product-price">4 200 ₽</span>
+                        <a href="https://wa.me/79280126881?text=Здравствуйте!%20Хочу%20заказать%20микс%20Весеннее%20Настроение" target="_blank" class="buy-btn">Заказать</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer>
+        <p class="footer-text">Есть вопросы или хотите индивидуальный букет? Свяжитесь с нами прямо сейчас:</p>
+        <p><a href="tel:+79280126881" class="footer-phone">+7 (928) 012-68-81</a></p>
+        <p style="margin-top: 20px; font-size: 12px; color: #aaabab;">&copy; 2026 Google Цветы. Все права защищены.</p>
+    </footer>
+
+</body>
+</html>
