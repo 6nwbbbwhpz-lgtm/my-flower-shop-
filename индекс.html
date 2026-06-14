@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой цветочный магазин</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #fff9fa; color: #333; }
+        header { background-color: #d63384; color: white; text-align: center; padding: 20px 10px; }
+        h1 { margin: 0; font-size: 24px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 15px; box-sizing: border-box; }
+        
+        /* Галерея товаров */
+        .gallery { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
+        .product-card { background: white; border: 1px solid #ffccd5; border-radius: 12px; width: 45%; max-width: 220px; padding: 10px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); box-sizing: border-box; }
+        .product-card img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; }
+        .product-title { font-size: 14px; font-weight: bold; margin: 8px 0 4px 0; text-align: center; }
+        .product-price { color: #d63384; font-weight: bold; margin-bottom: 8px; font-size: 14px; }
+        .add-to-cart-btn { background-color: #d63384; color: white; border: none; padding: 8px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; width: 100%; font-weight: bold; }
+        
+        /* Дополнительные услуги */
+        .extra-services-section { background: white; border: 1px solid #ffccd5; border-radius: 12px; padding: 15px; margin: 25px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .extra-services-section h2 { color: #d63384; font-size: 18px; margin-top: 0; margin-bottom: 12px; }
+        .extra-option { display: flex; align-items: center; gap: 10px; font-size: 15px; cursor: pointer; margin-bottom: 8px; padding: 4px 0; }
+        .extra-option:last-child { margin-bottom: 0; }
+        .extra-option input { width: 18px; height: 18px; accent-color: #d63384; }
+        .extra-note { font-size: 12px; color: #888; font-style: italic; margin-left: 28px; }
+        
+        /* Интерактивная Корзина */
+        .cart-section { background: white; border: 2px solid #25D366; border-radius: 12px; padding: 15px; margin: 25px 0; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .cart-section h2 { margin-top: 0; color: #25D366; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+        .cart-items { margin-bottom: 15px; }
+        .cart-item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #eee; font-size: 14px; }
+        .cart-total { font-weight: bold; text-align: right; margin-bottom: 15px; font-size: 16px; color: #333; }
+        .whatsapp-btn { background-color: #25D366; color: white; text-decoration: none; display: block; text-align: center; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        
+        /* Отзывы */
+        .reviews-section { background: #fff5f8; border: 1px solid #ffccd5; border-radius: 12px; padding: 15px; margin: 30px 0; }
+        .reviews-section h2 { color: #d63384; font-size: 18px; margin-top: 0; }
+        .review { margin-bottom: 12px; font-size: 14px; border-bottom: 1px solid #ffd6e0; padding-bottom: 8px; font-style: italic; }
+        .review:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌸 Наш цветочный магазин</h1>
+    </header>
+
+    <div class="container">
+        <div class="gallery" id="gallery"></div>
+
+        <div class="extra-services-section">
+            <h2>🎁 Добавить к букету (дополнительные услуги)</h2>
+            
+            <label class="extra-option">
+                <input type="checkbox" id="extra-candy">
+                <span>🍬 Коробка вкусных конфет</span>
+            </label>
+            <div class="extra-note">Цена по запросу (уточняйте у флориста)</div>
+            <hr style="border: 0; border-top: 1px solid #fff0f2; margin: 8px 0;">
+
+            <label class="extra-option">
+                <input type="checkbox" id="extra-champagne">
+                <span>🍾 Бутылка шампанского</span>
+            </label>
+            <div class="extra-note">Цена по запросу (уточняйте у флориста)</div>
+            <hr style="border: 0; border-top: 1px solid #fff0f2; margin: 8px 0;">
+
+            <label class="extra-option">
+                <input type="checkbox" id="extra-combo">
+                <span>🧺 VIP-набор: Цветы + Конфеты + Шампанское</span>
+            </label>
+            <div class="extra-note">Оформляется индивидуально в подарочную корзину</div>
+        </div>
+
+        <div class="cart-section">
+            <h2>🛒 Ваша корзина</h2>
+            <div id="cart-items" class="cart-items">
+                <p style="color: #888; font-style: italic; margin: 0;">Корзина пуста. Добавьте букеты!</p>
+            </div>
+            <div class="cart-total" id="cart-total">Итого: 0 руб.</div>
+            <a href="#" class="whatsapp-btn" onclick="sendOrder(event)">Оформить заказ в WhatsApp</a>
+        </div>
+
+        <div class="reviews-section">
+            <h2>⭐ Отзывы наших клиентов</h2>
+            <div class="review"><strong>Анна:</strong> Потрясающие букеты! Цветы свежие, стоят очень долго. Спасибо!</div>
+            <div class="review"><strong>Дмитрий:</strong> Заказывал доставку жене, она в восторге. Теперь только у вас буду брать.</div>
+            <div class="review"><strong>Елена:</strong> Очень вежливые флористы, помогли подобрать идеальную композицию.</div>
+        </div>
+    </div>
+
+    <script>
+        const myPhoneNumber = "79280126881"; 
+
+        // Список ваших картинок
+        const products = [
+            { id: 1, name: "Букет Нежность", price: 2500, file: "ФОТО-2025-06-29-01-24-05.jpeg" },
+            { id: 2, name: "Яркий микс", price: 3200, file: "ФОТО-2025-06-29-01-24-06.jpeg" },
+            { id: 3, name: "Романтика роуз", price: 4000, file: "ФОТО-2025-06-29-01-24-07.jpeg" },
+            { id: 4, name: "Весеннее утро", price: 2100, file: "ФОТО-2025-06-29-01-24-08.jpeg" },
+            { id: 5, name: "Изящный презент", price: 3500, file: "ФОТО-2025-06-29-01-24-09.jpeg" },
+            { id: 6, name: "Авторский стиль", price: 4500, file: "ФОТО-2025-06-29-16-03-24.jpeg" },
+            { id: 7, name: "Цветочный всплеск", price: 2800, file: "ФОТО-2025-06-29-16-04-05.jpeg" },
+            { id: 8, name: "Праздничное настроение", price: 5000, file: "ФОТО-2025-06-29-16-26-53.jpeg" },
+            { id: 9, name: "Шикарная коробка", price: 3800, file: "ФОТО-2025-06-29-16-55-31.jpeg" },
+            { id: 10, name: "Премиум композиция", price: 6000, file: "ФОТО-2025-07-13-17-43-49.jpeg" }
+        ];
+
+        let cart = [];
+
+        const galleryEl = document.getElementById('gallery');
+        products.forEach(prod => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img src="${prod.file}" alt="${prod.name}">
+                <div class="product-title">${prod.name}</div>
+                <div class="product-price">${prod.price} руб.</div>
+                <button class="add-to-cart-btn" onclick="addToCart(${prod.id})">В корзину</button>
+            `;
+            galleryEl.appendChild(card);
+        });
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const inCart = cart.find(item => item.id === id);
+            if (inCart) {
+                inCart.count++;
+            } else {
+                cart.push({ ...product, count: 1 });
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItemsEl = document.getElementById('cart-items');
+            const cartTotalEl = document.getElementById('cart-total');
+            if (cart.length === 0) {
+                cartItemsEl.innerHTML = '<p style="color: #888; font-style: italic; margin: 0;">Корзина пуста. Добавьте букеты!</p>';
+                cartTotalEl.innerText = 'Итого: 0 руб.';
+                return;
+            }
+            cartItemsEl.innerHTML = '';
+            let total = 0;
+            cart.forEach(item => {
+                total += item.price * item.count;
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `<span>🌸 ${item.name} (x${item.count})</span><span>${item.price * item.count} руб.</span>`;
+                cartItemsEl.appendChild(div);
+            });
+            cartTotalEl.innerText = `Итого: ${total} руб.`;
+        }
+
+        function sendOrder(e) {
+            e.preventDefault();
+            const candySelected = document.getElementById('extra-candy').checked;
+            const champagneSelected = document.getElementById('extra-champagne').checked;
+            const comboSelected = document.getElementById('extra-combo').checked;
+
+            if (cart.length === 0 && !candySelected && !champagneSelected && !comboSelected) {
+                alert('Выберите товар!');
+                return;
+            }
+
+            let message = 'Здравствуйте! Мой заказ:\n\n';
+            let total = 0;
+
+            if (cart.length > 0) {
+                message += '*Букеты:*\n';
+                cart.forEach(item => {
+                    message += `• ${item.name} — ${item.count} шт. (${item.price * item.count} руб.)\n`;
+                    total += item.price * item.count;
+                });
+                message += `\n*Итого за букеты: ${total} руб.*\n`;
+            }
+
+            let hasExtras = false;
+            let extrasText = '\n🎁 *Дополнительно (согласовать цену):*\n';
+            if (candySelected) { extrasText += '• Коробка конфет 🍬\n'; hasExtras = true; }
+            if (champagneSelected) { extrasText += '• Бутылка шампанского 🍾\n'; hasExtras = true; }
+            if (comboSelected) { extrasText += '• VIP-набор 🧺\n'; hasExtras = true; }
+
+            if (hasExtras) message += extrasText;
+
+            window.open(`https://wa.me/${myPhoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+    </script>
+</body>
+</html>
