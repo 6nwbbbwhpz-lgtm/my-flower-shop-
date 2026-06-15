@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 Магия Цветов — Каталог</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #fff9fa; color: #333; }
+        header { background-color: #d63384; color: white; text-align: center; padding: 20px 10px; }
+        h1 { margin: 0; font-size: 24px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 15px; box-sizing: border-box; }
+        
+        /* Город, Дополнения и Корзина теперь ВВЕРХУ */
+        .city-box, .extra-services-section, .cart-section { background: white; border: 1px solid #ffccd5; border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .city-box select { padding: 8px; width: 100%; border: 1px solid #d63384; border-radius: 8px; font-size: 16px; }
+        .extra-services-section h2, .cart-section h2 { color: #d63384; margin-top: 0; font-size: 18px; }
+        
+        .gallery { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+        .product-card { background: white; border: 1px solid #ffccd5; border-radius: 12px; width: 46%; max-width: 220px; padding: 8px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .product-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; background-color: #fff0f2; }
+        .product-title { font-size: 13px; font-weight: bold; margin: 6px 0 4px 0; text-align: center; }
+        .product-price { color: #d63384; font-weight: bold; margin-bottom: 6px; font-size: 13px; }
+        .add-to-cart-btn { background-color: #d63384; color: white; border: none; padding: 6px 10px; border-radius: 20px; font-size: 11px; cursor: pointer; width: 100%; font-weight: bold; }
+        
+        .whatsapp-btn { background-color: #25D366; color: white; text-decoration: none; display: block; text-align: center; padding: 12px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; width: 100%; }
+    </style>
+</head>
+<body>
+    <header><h1>🌸 Цветочная мастерская</h1></header>
+    <div class="container">
+        
+        <div class="city-box">
+            <label for="city-select">📍 Выберите город:</label>
+            <select id="city-select">
+                <option value="Москва">Москва</option>
+                <option value="Санкт-Петербург">Санкт-Петербург</option>
+                <option value="Краснодар">Краснодар</option>
+                <option value="Екатеринбург">Екатеринбург</option>
+                <option value="Другой город">Другой город</option>
+            </select>
+        </div>
+
+        <div class="extra-services-section">
+            <h2>🎁 Дополнения</h2>
+            <label class="extra-option"><input type="checkbox" id="extra-candy"> 🍬 Конфеты</label><br>
+            <label class="extra-option"><input type="checkbox" id="extra-strawberries"> 🍓 Клубника</label><br>
+            <label class="extra-option"><input type="checkbox" id="extra-toy"> 🧸 Игрушка</label><br>
+            <label class="extra-option"><input type="checkbox" id="extra-card"> 💌 Открытка</label><br>
+            <label class="extra-option"><input type="checkbox" id="extra-balloons"> 🎈 Шарики</label>
+        </div>
+
+        <div class="cart-section">
+            <h2>🛒 Корзина</h2>
+            <div id="cart-items">Корзина пуста</div>
+            <div id="cart-total" style="font-weight: bold; margin: 10px 0;">Итого: 0 руб.</div>
+            <button class="whatsapp-btn" onclick="sendOrder()">Оформить в WhatsApp</button>
+        </div>
+
+        <div class="gallery" id="gallery"></div>
+    </div>
+
+    <script>
+        const myPhoneNumber = "79280126881";
+        const uploadedPhotos = ["PHOTO-2025-06-07-00-47-47.jpeg", "PHOTO-2025-06-07-00-54-49.jpeg", "PHOTO-2025-06-29-01-24-00 5.jpeg"];
+        const baseUrl = "https://raw.githubusercontent.com/6nwbbbwhpz-lgtm/----/main/";
+        let cart = [];
+
+        // Генерируем 55 букетов с ценой от 3500
+        const galleryEl = document.getElementById('gallery');
+        for (let i = 1; i <= 55; i++) {
+            let price = 3500 + (i % 5) * 500;
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img src="${baseUrl}${encodeURI(uploadedPhotos[i % uploadedPhotos.length])}">
+                <div class="product-title">Букет №${i}</div>
+                <div class="product-price">${price} руб.</div>
+                <button class="add-to-cart-btn" onclick="addToCart('Букет №${i}', ${price})">В корзину</button>
+            `;
+            galleryEl.appendChild(card);
+        }
+
+        function addToCart(name, price) {
+            cart.push({name, price});
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-items').innerHTML = cart.map(i => `<div>${i.name} — ${i.price} руб.</div>`).join('');
+            document.getElementById('cart-total').innerText = 'Итого: ' + cart.reduce((s, i) => s + i.price, 0) + ' руб.';
+        }
+
+        function sendOrder() {
+            let city = document.getElementById('city-select').value;
+            let msg = `Заказ из г. ${city}:\n` + cart.map(i => i.name + " (" + i.price + " р.)").join("\n");
+            if(document.getElementById('extra-candy').checked) msg += "\n+ Конфеты";
+            window.open(`https://wa.me/${myPhoneNumber}?text=${encodeURIComponent(msg)}`);
+        }
+    </script>
+</body>
+</html>
