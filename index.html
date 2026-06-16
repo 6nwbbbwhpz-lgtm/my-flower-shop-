@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 Магия Цветов — Каталог</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #fff9fa; color: #333; }
+        header { background-color: #d63384; color: white; text-align: center; padding: 20px 10px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 15px; }
+        
+        .city-box { background: white; border: 1px solid #ffccd5; border-radius: 12px; padding: 12px 15px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .city-box select { padding: 6px 12px; border: 1px solid #d63384; border-radius: 8px; width: 100%; font-weight: bold; }
+
+        .gallery { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+        .product-card { background: white; border: 1px solid #ffccd5; border-radius: 12px; width: 46%; max-width: 220px; padding: 8px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .product-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; background-color: #fff0f2; }
+        .product-title { font-size: 14px; font-weight: bold; margin: 6px 0 2px 0; text-align: center; }
+        .product-desc { font-size: 11px; color: #666; margin-bottom: 4px; text-align: center; height: 30px; overflow: hidden; }
+        .product-price { color: #d63384; font-weight: bold; margin-bottom: 6px; font-size: 13px; }
+        .add-to-cart-btn { background-color: #d63384; color: white; border: none; padding: 6px 10px; border-radius: 20px; font-size: 11px; cursor: pointer; width: 100%; font-weight: bold; }
+        
+        .extra-services-section { background: white; border: 1px solid #ffccd5; border-radius: 12px; padding: 15px; margin: 25px 0; }
+        .cart-section { background: white; border: 2px solid #25D366; border-radius: 12px; padding: 15px; margin: 25px 0; }
+        .whatsapp-btn { background-color: #25D366; color: white; text-decoration: none; display: block; text-align: center; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 16px; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <header><h1>🌸 Цветочная мастерская</h1></header>
+    <div class="container">
+        <div class="city-box">
+            <label>📍 Город доставки:</label>
+            <select id="city-select">
+                <option value="Москва">Москва</option>
+                <option value="Санкт-Петербург">Санкт-Петербург</option>
+                <option value="Краснодар">Краснодар</option>
+            </select>
+        </div>
+
+        <div class="gallery" id="gallery"></div>
+        
+        <div class="extra-services-section">...</div>
+        <div class="cart-section">...</div>
+    </div>
+
+    <script>
+        // База описаний, соответствующая визуалу букетов
+        const descriptions = [
+            { title: "Классические розы", desc: "Свежие красные розы в дизайнерской упаковке." },
+            { title: "Нежные пионы", desc: "Пышные пионы с тонким ароматом для особого случая." },
+            { title: "Гортензия-микс", desc: "Воздушная гортензия, дополненная веточками зелени." },
+            { title: "Белоснежная сказка", desc: "Элегантный моно-букет из отборных белых роз." },
+            { title: "Яркий акцент", desc: "Контрастная композиция, которая поднимет настроение." }
+        ];
+
+        // Генерируем букеты
+        const galleryEl = document.getElementById('gallery');
+        for (let i = 1; i <= 55; i++) {
+            let data = descriptions[i % descriptions.length];
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img src="...ссылка..." alt="${data.title}">
+                <div class="product-title">${data.title}</div>
+                <div class="product-desc">${data.desc}</div>
+                <div class="product-price">3500 руб.</div>
+                <button class="add-to-cart-btn" onclick="addToCart('${data.title}')">В корзину</button>
+            `;
+            galleryEl.appendChild(card);
+        }
+    </script>
+</body>
+</html>
